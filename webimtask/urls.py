@@ -18,5 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^', include('vkoauth.urls')),
+    url(r'^social/', include('vkoauth.urls')),
     #url(r'^admin/', admin.site.urls),
 ]
