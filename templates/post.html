@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>Hello!</head>
+<body>
+    <div class="user">
+        {{user.first_name}} {{user.last_name}} <br>
+    </div>
+    <script type="text/javascript">
+        VK.Api.call('friends.get', {count: 3, fields: true}, function(r) {
+            if(r.response) {
+                    var body = document.getElementById('body')
+                    var div = document.createElement('div');
+                    div.innerHTML = "Друзья:\n" + r.response[0]["first_name"] + r.response[0]["last_name"];
+                    body.appendChild(div)
+                    var div = document.createElement('div');
+                    div.innerHTML = "Друзья:\n" + r.response[1]["first_name"] + r.response[1]["last_name"];
+                    body.appendChild(div)
+                    var div = document.createElement('div');
+                    div.innerHTML = "Друзья:\n" + r.response[2]["first_name"] + r.response[2]["last_name"];
+                    body.appendChild(div)
+            }
+        });
+    </script>
+</body>
+</html>

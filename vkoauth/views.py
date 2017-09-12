@@ -4,20 +4,21 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from vkoauth.forms import UserForm
 
 
-def test(request):
-    """  
-    error = ''
-    if request.method == "POST":
-        user = authenticate(username=request.POST["username"], password=request.POST["password"])
-        if user is not None:
-                login(request, user)
-                return HttpResponseRedirect("/")
+def test(request):    
+    if request.method == "POST": 
+        user = UserForm(request.POST)
+        if user.is_valid():
+            user.save()
+            login(request, user)
+            return render(request, "post.html", {'user' : user})
         else:
-            error = "Incorrect username/password"
-    """
-    
-    return render(request, "login.html")  
-    #s = '<p style="margin: 0.4em;"><a href="{% url socialauth_begin \'vkontakte-oauth2\' %}">Enter VK</a></p><br>'
-    #return HttpResponse(s+"Rubenchik")
+            return HttpResponse("I don't know how does it happen")
+    else:
+        if request.user.is_authenticated():
+            return render(request, "post.html", {'user' : user})
+        else:
+            return render(request, "get.html")  
+
