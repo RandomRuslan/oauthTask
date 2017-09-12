@@ -1,25 +1,44 @@
 <!DOCTYPE HTML>
 
 <html>
-<head>Hello!</head>
-<body>
-    <div class="user">
-        {{user.first_name}} {{user.last_name}} <br>
-    </div>
+<head>
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js?147"></script>
     <script type="text/javascript">
-        VK.Api.call('friends.get', {count: 3, fields: true}, function(r) {
+        VK.init({apiId: 6180474});
+    </script>
+    <style type="text/css">
+
+        div {
+            width: 400px;
+            padding: 10px;
+            margin: auto;
+            background: #fc0;
+        }
+
+    </style>
+</head>
+<body id="body">
+    Сейчас все будет
+    <div id="user"></div>
+    <ol id="friends" style="background:PINK">
+
+    </ol>
+
+    <script type="text/javascript">
+        VK.Api.call('users.get', {}, function(r) {
+            var div = document.getElementById('user')
+            div.innerHTML = "Hello, " + r.response[0]["first_name"] + " " + r.response[0]["last_name"];
+        });
+
+        VK.Api.call('friends.get', {count: 5, fields: true}, function(r) {
             if(r.response) {
-                    var body = document.getElementById('body')
-                    var div = document.createElement('div');
-                    div.innerHTML = "Друзья:\n" + r.response[0]["first_name"] + r.response[0]["last_name"];
-                    body.appendChild(div)
-                    var div = document.createElement('div');
-                    div.innerHTML = "Друзья:\n" + r.response[1]["first_name"] + r.response[1]["last_name"];
-                    body.appendChild(div)
-                    var div = document.createElement('div');
-                    div.innerHTML = "Друзья:\n" + r.response[2]["first_name"] + r.response[2]["last_name"];
-                    body.appendChild(div)
-            }
+                var ol = document.getElementById('friends')
+                for(i=0; i<5; i++){
+                    var li = document.createElement('li');
+                    li.innerHTML = r.response[i]["first_name"] + r.response[i]["last_name"];
+                    ol.appendChild(li)
+                 }
+             }
         });
     </script>
 </body>

@@ -2,23 +2,17 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-from vkoauth.forms import UserForm
+from django.conf import settings
 
 
-def test(request):    
-    if request.method == "POST": 
-        user = UserForm(request.POST)
-        if user.is_valid():
-            user.save()
-            login(request, user)
-            return render(request, "post.html", {'user' : user})
-        else:
-            return HttpResponse("I don't know how does it happen")
+
+
+
+
+
+
+def test(request):
+    if request.COOKIES.get("vk_app_6180474") is None:
+        return render(request, "get.html")
     else:
-        if request.user.is_authenticated():
-            return render(request, "post.html", {'user' : user})
-        else:
-            return render(request, "get.html")  
-
+        return render(request, "post.html")

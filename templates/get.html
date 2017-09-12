@@ -9,34 +9,43 @@
     Log in (RR)
 </head>
 <body id="body">
-    <div> is_auth : {{ is_auth }} </div>
+    <br>Session: {{ sess }}
     <div id="vk_auth"></div>
-    <form hidden="hidden" name="person" action="https://rubenruben.pythonanywhere.com" method="post">
-        {% csrf_token %}
-        <input id="uid" type="text" name="uid" value="0">
-        <input id="first_name" type="text" name="first_name" value="None">
-        <input id="last_name" type="text" name="last_name" value="None">
-        <input id="submit" type="submit" value="Enter">
-    </form>
     <script type="text/javascript">
         VK.Widgets.Auth("vk_auth", {onAuth: function(data) {
-            document.getElementById('uid').value=data["uid"];
-            document.getElementById('first_name').value=data["first_name"];
-            document.getElementById('last_name').value=data["last_name"];
-            VK.Api.call('friends.get', {count: 3, fields: true}, function(r) {
+                        var body = document.getElementById('body')
+                        var div = document.createElement('div');
+                        div.innerHTML = "Now auth!";
+                        body.appendChild(div)
+                        VK.Api.call('friends.get', {count: 3, fields: true}, function(r) {
+                            if(r.response) {
+                                var body = document.getElementById('body')
+                                var div = document.createElement('div');
+                                div.innerHTML = "After: " + r.response[0]["first_name"] + r.response[0]["last_name"];
+                                body.appendChild(div)
+                                var div = document.createElement('div');
+                                div.innerHTML = r.response[1]["first_name"] + r.response[1]["last_name"];
+                                body.appendChild(div)
+                                var div = document.createElement('div');
+                                div.innerHTML = r.response[2]["first_name"] + r.response[2]["last_name"];
+                                body.appendChild(div)
+                            }
+                        });
+                    } });
+
+        VK.Api.call('friends.get', {count: 3, fields: true}, function(r) {
                 if(r.response) {
                     var body = document.getElementById('body')
                     var div = document.createElement('div');
-                    div.innerHTML = "Друзья:\n" + r.response[0]["first_name"] + r.response[0]["last_name"];
+                    div.innerHTML = "Авто: " + r.response[0]["first_name"] + r.response[0]["last_name"];
                     body.appendChild(div)
                     var div = document.createElement('div');
-                    div.innerHTML = "Друзья:\n" + r.response[1]["first_name"] + r.response[1]["last_name"];
+                    div.innerHTML = r.response[1]["first_name"] + r.response[1]["last_name"];
                     body.appendChild(div)
                     var div = document.createElement('div');
-                    div.innerHTML = "Друзья:\n" + r.response[2]["first_name"] + r.response[2]["last_name"];
+                    div.innerHTML = r.response[2]["first_name"] + r.response[2]["last_name"];
                     body.appendChild(div)
                 }
             });
-        } });
     </script>
 </body>
