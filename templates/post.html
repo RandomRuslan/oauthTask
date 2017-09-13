@@ -3,26 +3,38 @@
 <html>
 <head>
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?147"></script>
-    <script type="text/javascript">
-        VK.init({apiId: 6180474});
-    </script>
+    <script type="text/javascript"> VK.init({apiId: 6180474}); </script>
     <style type="text/css">
-
-        div {
-            width: 400px;
-            padding: 10px;
-            margin: auto;
-            background: #fc0;
+        #parent{
+            display:inline-block;
+            padding: 15px 10px;
+            background: #005050;
+            font-size:20px;
+            color:#FDDDE6;
+            border-radius: 15px;
         }
-
+        #user {
+            margin:0px;
+            text-align: center;
+        }
+        ol{
+            padding: 10px 20px 10px 40px;
+            margin:10px 15px 0px 15px;
+            background:#006090;
+            text-align: left;
+            border-radius: 10px;
+        }
+        li{
+            margin: 5px 10px
+        }
     </style>
 </head>
 <body id="body">
     Сейчас все будет
-    <div id="user"></div>
-    <ol id="friends" style="background:PINK">
-
-    </ol>
+    <center><div id="parent">
+        <div id="user"></div>
+        <ol id="friends"></ol>
+    </div></center>
 
     <script type="text/javascript">
         VK.Api.call('users.get', {}, function(r) {
@@ -35,7 +47,7 @@
                 var ol = document.getElementById('friends')
                 for(i=0; i<5; i++){
                     var li = document.createElement('li');
-                    li.innerHTML = r.response[i]["first_name"] + r.response[i]["last_name"];
+                    li.innerHTML = r.response[i]["first_name"] + " " + r.response[i]["last_name"];
                     ol.appendChild(li)
                  }
              }
