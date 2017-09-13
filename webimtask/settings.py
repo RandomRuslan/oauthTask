@@ -3,18 +3,13 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-VK_APP_ID = '6180474'
-VKONTAKTE_APP_ID = VK_APP_ID
-VK_API_SECRET = 'CDhBiXGhgnHGzvdBM8AZ'
-VKONTAKTE_APP_SECRET = VK_API_SECRET
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'xz7qpwx(xuq%r$$z#+*fzdgmsi6jcgg9rb^57gu#j3*n0ykj)x'
-
+SECURE_SSL_REDIRECT = True
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.rubenruben.pythonanywhere.com']
 
 # Application definition
 
@@ -80,11 +75,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.contrib.vk.VKOAuth2Backend',
-    'django.contrib.auth.backends.ModelBackend',
-)
 
 LANGUAGE_CODE = 'en-us'
 

@@ -6,20 +6,20 @@
     <script type="text/javascript">
         VK.init({apiId: 6180474});
     </script>
-    Authorization
 </head>
-<body id="body">
-    <div id="vk_auth"></div>
-    <script type="text/javascript">
-        VK.Widgets.Auth("vk_auth", {onAuth: function(data) {
-                        var body = document.getElementById('body')
-                        var div = document.createElement('div');
-                        div.innerHTML = "Your name:";
-                        body.appendChild(div)
-                        VK.Api.call('account.getProfileInfo', function(r) {
-                            var div = document.createElement('div');
-                            div.innerHTML = r.response["first_name"] + r.response["first_name"] ;
-                            body.appendChild(div)
-        } });
-    </script>
+<body>
+    <center>
+        <div id="note">Для доступа на сайт, авторизируйтесь через vk.com</div>
+        <div id="vk_auth" style="width:400px"></div>
+        <form action="https://rubenruben.pythonanywhere.com" method="POST" style="visibility:hidden">
+            {% csrf_token %}
+            <input name="session" value="true">
+            <input id="submit" type="submit" value="Выход">
+        </form>
+        <script type="text/javascript">
+            VK.Widgets.Auth("vk_auth", {width: "300px", onAuth: function(data) {
+                document.getElementById('submit').click()
+            } });
+        </script>
+    </center>
 </body>
